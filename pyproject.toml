@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sciglass-process"
+version = "0.1.0"
+description = "Decode the melting and annealing history hidden in SciGlass source records into tidy columns"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mohammadreza Saeidi" }]
+dependencies = ["pandas>=1.5"]
+keywords = ["glass", "materials-informatics", "sciglass", "materials-science", "machine-learning", "data"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+sciglass-process = "sciglass_process.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
