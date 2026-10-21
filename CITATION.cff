@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below, together with the SciGlass dataset."
+title: "sciglass-process: decoding the melting and annealing history in SciGlass"
+type: software
+authors:
+  - family-names: Saeidi
+    given-names: Mohammadreza
+version: 0.1.0
+date-released: 2026-10-20
+license: MIT
+repository-code: "https://github.com/saeidi-mohammadreza/sciglass-process"
+keywords:
+  - glass
+  - materials informatics
+  - SciGlass
+  - machine learning
+  - process parameters
+references:
+  - type: dataset
+    title: "SciGlass (open release)"
+    authors:
+      - family-names: Cassar
+        given-names: Daniel R.
+    doi: 10.5281/zenodo.8287159
+    url: "https://github.com/drcassar/SciGlass"
