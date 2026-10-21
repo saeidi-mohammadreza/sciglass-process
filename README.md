@@ -32,7 +32,7 @@ Counts on the open release ([drcassar/SciGlass](https://github.com/drcassar/SciG
 | **with Tg *and* a melting temperature** | | **64,732** |
 | with Tg, melting temperature and annealing temperature | | 10,765 |
 
-So a composition → Tg model can be extended to composition **+ process** → Tg on about 65 thousand glasses, without collecting a single new measurement.
+So a composition → Tg model can be extended to composition **+ process** → Tg on about 65 thousand glasses, without collecting a single new measurement. Whether that helps is a separate question, tested [below](#does-melting-history-improve-property-prediction).
 
 Most common melting vessels (codes and wording are SciGlass's own legend, table `DT`):
 
@@ -73,6 +73,22 @@ p = parse_process("#m 1 clp 2 1500 3. 3 8 cw 0 'and remelting' 2 1500 3 2 2 1600
 p.vessel, p.melt_temp_max_C, p.melt_time_total_h, p.casting   # ('clp', 1600.0, 6.0, 'cw')
 [(s.temp_max_C, s.time_h) for s in p.stages]                 # [(1500, 3), (1500, 2), (1600, 1)]
 ```
+
+## Does melting history improve property prediction?
+
+A first, deliberately strict test (`pip install scikit-learn`, then `python examples/process_benefit.py ../SciGlass`, ~4 min on two cores): the same glasses and the same gradient-boosting model, with and without the decoded melting conditions (temperature, time, number of stages, vessel, casting, quenching). Compositions are complete (major oxides plus the 60 most common minor components, summing to 100 ± 2 mol%). Cross-validation is grouped by source paper, so every test glass comes from a paper the model never saw. Annealing temperature is excluded because it is usually chosen from the known Tg and would leak the target.
+
+| property | glasses | papers | composition only | + melting history | change | control (melting columns shuffled) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Tg (K) | 53,258 | 6,447 | 50.5 | 49.2 | −2.6% | 50.9 |
+| density (g/cm³) | 56,060 | 5,836 | 0.340 | 0.337 | −0.9% | 0.343 |
+| refractive index n<sub>d</sub> | 32,997 | 2,781 | 0.0658 | 0.0653 | −0.8% | 0.0667 |
+
+RMSE shown. The gain is real (the shuffled control is worse than composition alone) but small. The honest reading:
+
+* Across papers, error is dominated by between-laboratory scatter and by compositions reported *as batched*; one process description per paper cannot explain that.
+* A naive version of this test, with incomplete compositions (major oxides only), showed a 15% gain. It disappeared once compositions were complete: melting conditions were acting as a proxy for glass family (e.g. chalcogenides melted in sealed silica ampoules), not as physics.
+* Where process should matter most, within one composition family and one laboratory, a per-paper header is too coarse. The next step is to model the residual of a composition model against melting time and vessel for volatile-component glasses (borates, alkali-rich), where volatilisation changes the real composition.
 
 ## How the header is decoded
 
