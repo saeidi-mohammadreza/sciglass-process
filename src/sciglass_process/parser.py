@@ -16,9 +16,9 @@ for example ``m 1 pc`` = "Melting in a platinum crucible", ``m 2`` = "at ... °C
 A trailing dot on a field number (``2.``) is the sentence terminator SciGlass uses
 when rendering the clause as text; it carries no data. Field ``0`` holds free text.
 
-Published glass-ML pipelines read compositions and properties from the flattened
-``SciGK`` table and never parse this header, so the melting temperature, melting
-time, crucible, atmosphere, casting and annealing schedule are discarded. This
+The glass-ML pipelines I have seen read compositions and properties from the
+flattened ``SciGK`` table and do not parse this header, so the melting temperature,
+melting time, crucible, atmosphere, casting and annealing schedule are lost. This
 module turns them into columns.
 """
 from __future__ import annotations
