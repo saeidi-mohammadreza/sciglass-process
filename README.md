@@ -2,9 +2,9 @@
 
 [![CI](https://github.com/saeidi-mohammadreza/sciglass-process/actions/workflows/ci.yml/badge.svg)](https://github.com/saeidi-mohammadreza/sciglass-process/actions/workflows/ci.yml)
 
-**Recover the melting and annealing history that every glass-ML pipeline throws away.**
+**Recover the melting and annealing history that glass-ML work on SciGlass usually leaves out.**
 
-SciGlass is the largest open glass database (422,949 glasses from 39,949 literature sources). Machine-learning work on it reads compositions and properties from the flattened `SciGK` table. But each source record in the `ARHIV` table also starts with a compact coded header that says *how the glasses were made*: crucible, melting temperature and time, atmosphere, casting, annealing temperature and time, cooling rate. Nobody parses it. This package does.
+SciGlass is the largest open glass database (422,949 glasses from 39,949 literature sources). Machine-learning work on it reads compositions and properties from the flattened `SciGK` table. But each source record in the `ARHIV` table also starts with a compact coded header that says *how the glasses were made*: crucible, melting temperature and time, atmosphere, casting, annealing temperature and time, cooling rate. I have not found published work that parses it; this package does.
 
 ```
 #m 1 pc 2. 1200-1250,a 1 500 3. 1,x 130 1 me 1. old,r 'Author A.' ...#
@@ -114,6 +114,6 @@ SCIGLASS_DIR=../SciGlass pytest tests/test_real_data.py       # pins the counts 
 
 ## Background
 
-This came out of a 306-source survey of public data for a batch-composition + process → property model for industrial glass (August 2026). The finding that made the project feasible was that the process half of the feature space, assumed missing from every public database, is already sitting in this header for 69% of SciGlass's sources.
+This came out of a 306-source survey of public data for a batch-composition + process → property model for industrial glass (August 2026). The finding that made the project feasible: the process half of the feature space, usually assumed missing from public databases, is already in this header for 69% of SciGlass's sources.
 
 Author: Mohammadreza Saeidi · M.Sc. Materials Engineering (IUST) · [LinkedIn](https://www.linkedin.com/in/mohammadreza-saeidi)
